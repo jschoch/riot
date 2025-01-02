@@ -8,6 +8,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+cheetah3 = "^3.2.6.post1"
+configparser = "^7.1.0"
+pytest = "^8.3.4"
 
 
 [build-system]
