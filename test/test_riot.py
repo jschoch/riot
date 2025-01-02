@@ -53,3 +53,7 @@ class TestRiot:
         riot.read_ini(self.ini_file_path)
         riot.regen_ini(tdir="./ini_templates")
 
+    def test_backup_file(self):
+        assert not True, "NOT DONE YET"
+
+
