@@ -12,17 +12,6 @@ class TestRiot:
     def setup_method(self):
         # display template
         self.t1 = "test/DISPLAY.t"
-
-        # a test string
-        self.ini_content = """
-[EMC]
-MACHINE = MyMachine
-VERSION = 1.0
-
-[AXIS_X]
-MAX_LIMIT = 50.0
-MIN_LIMIT = -50.0
-"""
         self.ini_file_path = "test/rio-pure.ini"
 
     def teardown_method(self):
@@ -33,6 +22,7 @@ MIN_LIMIT = -50.0
         riot.read(self.ini_file_path)
         
         print(f" filter section: {riot.config_dict["FILTER"]}")
+        riot.config.get("DISPLAY")
 
     def test_write(self):
         #riot = Riot()
@@ -41,8 +31,12 @@ MIN_LIMIT = -50.0
     def test_parse(self):
         riot = Riot()
         riot.read(self.ini_file_path)
+        output = []
+        section_name = "DISPLAY"
+        for key, value in riot.config_dict[section_name].items():
+            output.append(f"{key.upper()} = {value}")
         context = {
-            "riogen": riot.config_dict['DISPLAY']
+            "riogen": "\n".join(output),
         }
         riot.loadTemplate(self.t1,context)
         
