@@ -17,29 +17,36 @@ class TestRiot:
     def teardown_method(self):
         None
 
-    def test_read(self):
+    def test_read_ini(self):
         riot = Riot()
-        riot.read(self.ini_file_path)
+        riot.read_ini(self.ini_file_path)
         
         print(f" filter section: {riot.config_dict["FILTER"]}")
         riot.config.get("DISPLAY")
 
-    def test_write(self):
-        #riot = Riot()
-        None
-        
-    def test_parse(self):
+    def test_parse_template_dir(self):
         riot = Riot()
-        riot.read(self.ini_file_path)
-        output = []
+        riot.read_ini(self.ini_file_path)
+        riot.regen_ini(tdir="./ini_templates")
+
+        
+    def test_parse_test_tmplate(self):
+        riot = Riot()
+        riot.read_ini(self.ini_file_path)
         section_name = "DISPLAY"
-        for key, value in riot.config_dict[section_name].items():
-            output.append(f"{key.upper()} = {value}")
+        gen_string = riot.parse_ini_template(section_name) 
+
         context = {
-            "riogen": "\n".join(output),
+            "riogen": gen_string
         }
         riot.loadTemplate(self.t1,context)
         
         #parsed_config = riot.parse()
         None
         
+
+    def test_regen(self):
+        riot = Riot()
+        riot.read_ini(self.ini_file_path)
+        riot.regen_ini(tdir="./ini_templates")
+
