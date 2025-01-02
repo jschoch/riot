@@ -3,14 +3,6 @@ from collections import OrderedDict
 from Cheetah.Template import Template
 import itertools as itt
 
-class MultiOrderedDict(OrderedDict):
-    def __setitem__(self, key, value):
-        if isinstance(value, list) and key in self:
-            self[key].extend(value)
-        else:
-            super(OrderedDict, self).__setitem__(key, value)
-    def keys(self):
-        return super(OrderedDict, self).keys()
 
 class MOD(dict):
     def __init__(self, *args, **kwargs):
@@ -56,3 +48,15 @@ class Riot:
 
     def parse(self):
         return
+
+    def loadTemplate(self, template_file_path,context):
+        # Load the template from a file or other source
+        with open(template_file_path, 'r') as f:
+            source = f.read()
+
+        # Create a Cheetah template object and populate it
+        t = Template(source, searchList=[context])
+
+        # Print the populated template
+        print(str(t))
+

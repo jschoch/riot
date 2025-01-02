@@ -10,7 +10,10 @@ def create_ini_file(content):
 
 class TestRiot:
     def setup_method(self):
-        # Create a temporary INI file for testing
+        # display template
+        self.t1 = "test/DISPLAY.t"
+
+        # a test string
         self.ini_content = """
 [EMC]
 MACHINE = MyMachine
@@ -36,8 +39,12 @@ MIN_LIMIT = -50.0
         None
         
     def test_parse(self):
-        #riot = Riot()
-        #riot.read(self.ini_file_path)
+        riot = Riot()
+        riot.read(self.ini_file_path)
+        context = {
+            "riogen": riot.config_dict['DISPLAY']
+        }
+        riot.loadTemplate(self.t1,context)
         
         #parsed_config = riot.parse()
         None
